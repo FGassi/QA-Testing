@@ -1,0 +1,16 @@
+# User Stories
+
+## AQ-2 — Cadastrar novo usuário
+
+### Descrição
+Como visitante,
+quero cadastrar uma conta,
+para realizar compras.
+
+### Critérios de aceitação
+- CA-01: Na primeira tela de cadastro, o sistema exige nome e e-mail obrigatório para continuar.
+- CA-02: Quando um campo obrigatório fica em branco, o sistema avisa em tela para preencher.
+- CA-03: Na segunda tela de cadastro, o sistema exige a senha e os dados de endereço (nome, sobrenome, endereço, país, estado, cidade, código postal e telefone) para concluir o cadastro. para concluir o cadastro.
+- CA-04: Se o e-mail já existe, o sistema exibe um aviso abaixo do campo e-mail.
+- CA-05: Quando o cadastro dá certo, o sistema exibe uma tela de sucesso.
+
