@@ -1,0 +1,23 @@
+{
+  "name": "qa-testing",
+  "version": "1.0.0",
+  "description": "Projeto de QA com foco em testes funcionais, gestão de testes, BDD e automação de testes web, utilizando o [Automation Exercise](https://automationexercise.com/) como aplicação sob teste.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FGassi/QA-Testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/FGassi/QA-Testing/issues"
+  },
+  "homepage": "https://github.com/FGassi/QA-Testing#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5"
+  }
+}
