@@ -72,7 +72,7 @@ test.describe('Primeira tela de cadastro', () => {
     test('@AQ-TC-3: Cadastro com campo nome vazio na primeira tela de cadastro', async ({ page }) => {
        
         await test.step('When o visitante preenche o campo email', async () => {
-            await page.getByTestId('signup-email').fill(usuarioValido.email);
+            await page.getByTestId('signup-email').fill(emailGerado());
         });
 
         //And deixa o campo email vazio
@@ -108,7 +108,7 @@ test.describe('Primeira tela de cadastro', () => {
     test('@AQ-TC-5: Cadastro com e-mail existente', async ({ page }) => {
        
         await test.step('When o visitante preenche o campo obrigatório Nome', async () => {
-            await page.getByTestId('signup-name').fill(usuarioExistente.nome);
+            await page.getByTestId('signup-name').fill(usuarioValido.nome);
         });
 
         await test.step('And preenche o campo e-mail com o e-mail do usuário cadastrado', async () => {

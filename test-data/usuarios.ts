@@ -7,7 +7,6 @@ export const usuarioValido = {
   cidade:'Santo André',
   cep:'09210-580',
   celular:'(11) 3356-7000',
-
 };
 
 export const usuarioInvalido = { 
@@ -15,7 +14,6 @@ export const usuarioInvalido = {
 };
 
 export const usuarioExistente = { 
-  nome:'Fe',
   email: 'ds@ds.com.br',
 };
 
