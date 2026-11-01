@@ -34,8 +34,8 @@ And o visitante é avisado de que o formato do e-mail é inválido
 
 @AQ-TC-5
 Scenario: Cadastro com e-mail existente
-Given que existe um usuário cadastrado com um e-mail
-And que o visitante se encontra na primeira tela de cadastro
+Given que o visitante se encontra na primeira tela de cadastro
+And existe um usuário cadastrado com um e-mail 
 When o visitante preenche o campo obrigatório Nome
 And preenche o campo e-mail com o e-mail do usuário cadastrado
 And clica no botão de cadastrar
@@ -47,8 +47,8 @@ Scenario: Cadastro com campos obrigatórios vazios na segunda tela de cadastro
 Given que o visitante se encontra na segunda tela de cadastro
 When o visitante não preenche os demais campos obrigatórios
 And clica no botão "Criar conta" 
-Then o visitante permanece na segunda tela de cadastro
-And o sistema avisa que os campos obrigatórios devem ser preenchidos 
+Then o sistema avisa que os campos obrigatórios devem ser preenchidos 
+And o visitante permanece na segunda tela de cadastro 
 
 @AQ-TC-7
 Scenario: Cadastro bem sucedido com campos obrigatórios
@@ -60,7 +60,7 @@ Then o sistema direciona o usuário cadastrado para uma tela de confirmação
 @AQ-TC-8
 Scenario: Cadastro bem-sucedido com campos obrigatórios e opcionais
 Given que o visitante se encontra na segunda tela de cadastro
-When When o visitante preenche os demais campos obrigatórios com dados válidos
+When o visitante preenche os demais campos obrigatórios com dados válidos
 And preenche os demais campos não obrigatórios 
 And clica no botão "Criar conta" 
 Then o sistema direciona o usuário cadastrado para uma tela de confirmação 
