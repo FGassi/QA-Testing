@@ -1,0 +1,1 @@
+# Playwright armazenamento de relatórios
