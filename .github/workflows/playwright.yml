@@ -11,11 +11,11 @@ on:
         options:
           - Todos os testes
           - Smoke testes
-          - Epic: conta-autenticacao
-          - Story: conta-autenticacao / AQ-2
-          - Story: conta-autenticacao / AQ-3
-          - Story: conta-autenticacao / AQ-4
-          - Story: conta-autenticacao / AQ-5
+          - "Epic: conta-autenticacao"
+          - "Story: conta-autenticacao / AQ-2"
+          - "Story: conta-autenticacao / AQ-3"
+          - "Story: conta-autenticacao / AQ-4"
+          - "Story: conta-autenticacao / AQ-5"
 
 permissions:
   contents: write
