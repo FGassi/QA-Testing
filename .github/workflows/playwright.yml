@@ -2,6 +2,11 @@
 name: Playwright Tests and Report
 
 on:
+  push:
+    branches:
+      - main
+  paths-ignore:
+  - 'docs/reports/**'  
   workflow_dispatch:
     inputs:
       execution:
@@ -61,51 +66,60 @@ jobs:
           CEP: ${{ secrets.CEP }}
           CELULAR: ${{ secrets.CELULAR }}
         run: |
-          case "${{ inputs.execution }}" in
-            "Todos os testes")
-              npx playwright test
-              ;;
-            "Smoke testes")
-              npx playwright test --grep "@smoke"
-              ;;
-            "Epic: conta-autenticacao")
-              npx playwright test "tests/conta-autenticacao/"
-              ;;
-            "Story: conta-autenticacao / AQ-2")
-              npx playwright test "tests/conta-autenticacao/AQ-2/cadastro.spec.ts"
-              ;;
-            "Story: conta-autenticacao / AQ-3"|"Story: conta-autenticacao / AQ-4"|"Story: conta-autenticacao / AQ-5")
-              echo "Tests not configured for this User Story yet."
-              exit 1
-              ;;
-          esac
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "Automatic execution: Smoke tests"
+            npx playwright test --grep "@smoke"
+          else
+            case "${{ inputs.execution }}" in
+              "Todos os testes")
+                npx playwright test
+                ;;
+              "Smoke testes")
+                npx playwright test --grep "@smoke"
+                ;;
+              "Epic: conta-autenticacao")
+                npx playwright test "tests/conta-autenticacao/"
+                ;;
+              "Story: conta-autenticacao / AQ-2")
+                npx playwright test "tests/conta-autenticacao/AQ-2/cadastro.spec.ts"
+                ;;
+              "Story: conta-autenticacao / AQ-3"|"Story: conta-autenticacao / AQ-4"|"Story: conta-autenticacao / AQ-5")
+                echo "Tests not configured for this User Story yet."
+                exit 1
+                ;;
+            esac
+          fi
       
       - name: Prepare report
         if: always()
         run: |
-          case "${{ inputs.execution }}" in
-            "Todos os testes")
-              REPORT_PATH="All-tests"
-              ;;
-            "Smoke testes")
-              REPORT_PATH="Smoke-tests"
-              ;;
-            "Epic: conta-autenticacao")
-              REPORT_PATH="conta-autenticacao/Epic"
-              ;;
-            "Story: conta-autenticacao / AQ-2")
-              REPORT_PATH="conta-autenticacao/AQ-2"
-              ;;
-            "Story: conta-autenticacao / AQ-3")
-              REPORT_PATH="conta-autenticacao/AQ-3"
-              ;;
-            "Story: conta-autenticacao / AQ-4")
-              REPORT_PATH="conta-autenticacao/AQ-4"
-              ;;
-            "Story: conta-autenticacao / AQ-5")
-              REPORT_PATH="conta-autenticacao/AQ-5"
-              ;;
-          esac
+          if [ "${{ github.event_name }}" = "push" ]; then
+            REPORT_PATH="Smoke-tests"
+          else
+            case "${{ inputs.execution }}" in
+              "Todos os testes")
+                REPORT_PATH="All-tests"
+                ;;
+              "Smoke testes")
+                REPORT_PATH="Smoke-tests"
+                ;;
+              "Epic: conta-autenticacao")
+                REPORT_PATH="conta-autenticacao/Epic"
+                ;;
+              "Story: conta-autenticacao / AQ-2")
+                REPORT_PATH="conta-autenticacao/AQ-2"
+                ;;
+              "Story: conta-autenticacao / AQ-3")
+                REPORT_PATH="conta-autenticacao/AQ-3"
+                ;;
+              "Story: conta-autenticacao / AQ-4")
+                REPORT_PATH="conta-autenticacao/AQ-4"
+                ;;
+              "Story: conta-autenticacao / AQ-5")
+                REPORT_PATH="conta-autenticacao/AQ-5"
+                ;;
+            esac
+          fi
 
           echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
 
