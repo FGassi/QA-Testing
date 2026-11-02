@@ -43,6 +43,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Checkout reports branch
+        uses: actions/checkout@v4
+        with:
+          ref: relatorios
+          path: reports-store
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -93,6 +99,14 @@ jobs:
       - name: Prepare report
         if: always()
         run: |
+          mkdir -p docs/reports
+
+          # Recupera os relatórios já armazenados, quando existirem.
+          if [ -d reports-store/reports ]; then
+            find docs/reports -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+            cp -R reports-store/reports/. docs/reports/
+          fi
+
           if [ "${{ github.event_name }}" = "push" ]; then
             REPORT_PATH="Smoke-tests"
           else
@@ -134,15 +148,25 @@ jobs:
 
           cp -R playwright-report/. "docs/reports/$REPORT_PATH/"
 
-
       - name: Save updated report
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C reports-store config user.name "github-actions[bot]"
+          git -C reports-store config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add docs/reports/
-          git commit -m "Atualizar relatório para ${{ inputs.execution }}" || echo "Sem mudanças para commit"
-          git push
+          mkdir -p reports-store/reports
+
+          find reports-store/reports -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+          cp -R docs/reports/. reports-store/reports/
+
+          git -C reports-store add reports/
+
+          if ! git -C reports-store diff --cached --quiet; then
+            git -C reports-store commit -m "Atualizar relatórios HTML"
+            git -C reports-store push origin relatorios
+          else
+            echo "Nenhuma alteração nos relatórios."
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
