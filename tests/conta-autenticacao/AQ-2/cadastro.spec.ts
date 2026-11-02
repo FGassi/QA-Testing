@@ -1,8 +1,8 @@
 import { test, expect, Page } from '@playwright/test';
-import { usuarioValido, usuarioInvalido, emailGerado} from '../test-data/usuarios';
-import { PrimeiraTelaCadastro } from '../pages/primeira-tela-cadastro.page'; 
-import { SegundaTelaCadastro } from '../pages/segunda-tela-cadastro.page';
-import { TelaConfirmacaoCadastro } from '../pages/tela-confirmacao-cadastro.page';
+import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
+import { PrimeiraTelaCadastro } from '../../../pages/primeira-tela-cadastro.page'; 
+import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
+import { TelaConfirmacaoCadastro } from '../../../pages/tela-confirmacao-cadastro.page';
 
 test.describe('Primeira tela de cadastro', () => {
     let primeiraTela: PrimeiraTelaCadastro;

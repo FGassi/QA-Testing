@@ -4,15 +4,18 @@ name: Playwright Tests and Report
 on:
   workflow_dispatch:
     inputs:
-      story:
-        description: 'Select the User Story'
+      execution:
+        description: 'Selecione o teste a ser executado'
         required: true
         type: choice
         options:
-          - AQ-2
-          - AQ-3
-          - AQ-4
-          - AQ-5
+          - Todos os testes
+          - Smoke testes
+          - Epic: conta-autenticacao
+          - Story: conta-autenticacao / AQ-2
+          - Story: conta-autenticacao / AQ-3
+          - Story: conta-autenticacao / AQ-4
+          - Story: conta-autenticacao / AQ-5
 
 permissions:
   contents: write
@@ -27,7 +30,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    environment: ${{ inputs.story }}
+    environment: AQ-2
 
     outputs:
       test_outcome: ${{ steps.tests.outcome }}
@@ -48,7 +51,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run selected User Story
+      - name: Run selected tests
         id: tests
         continue-on-error: true
         env:
@@ -58,31 +61,65 @@ jobs:
           CEP: ${{ secrets.CEP }}
           CELULAR: ${{ secrets.CELULAR }}
         run: |
-          case "${{ inputs.story }}" in
-            AQ-2)
-              npx playwright test tests/cadastro.spec.ts
+          case "${{ inputs.execution }}" in
+            "Todos os testes")
+              npx playwright test
               ;;
-            AQ-3|AQ-4|AQ-5)
+            "Smoke testes")
+              npx playwright test --grep "@smoke"
+              ;;
+            "Epic: conta-autenticacao")
+              npx playwright test "tests/conta-autenticacao/"
+              ;;
+            "Story: conta-autenticacao / AQ-2")
+              npx playwright test "tests/conta-autenticacao/AQ-2/cadastro.spec.ts"
+              ;;
+            "Story: conta-autenticacao / AQ-3"|"Story: conta-autenticacao / AQ-4"|"Story: conta-autenticacao / AQ-5")
               echo "Tests not configured for this User Story yet."
               exit 1
               ;;
           esac
-
+      
       - name: Prepare report
         if: always()
-        env:
-          STORY: ${{ inputs.story }}
         run: |
+          case "${{ inputs.execution }}" in
+            "Todos os testes")
+              REPORT_PATH="All-tests"
+              ;;
+            "Smoke testes")
+              REPORT_PATH="Smoke-tests"
+              ;;
+            "Epic: conta-autenticacao")
+              REPORT_PATH="conta-autenticacao/Epic"
+              ;;
+            "Story: conta-autenticacao / AQ-2")
+              REPORT_PATH="conta-autenticacao/AQ-2"
+              ;;
+            "Story: conta-autenticacao / AQ-3")
+              REPORT_PATH="conta-autenticacao/AQ-3"
+              ;;
+            "Story: conta-autenticacao / AQ-4")
+              REPORT_PATH="conta-autenticacao/AQ-4"
+              ;;
+            "Story: conta-autenticacao / AQ-5")
+              REPORT_PATH="conta-autenticacao/AQ-5"
+              ;;
+          esac
+
+          echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
+
           if [ ! -f playwright-report/index.html ]; then
             echo "HTML report was not generated."
             exit 1
           fi
 
-          mkdir -p "docs/reports/$STORY"
+          mkdir -p "docs/reports/$REPORT_PATH"
 
-          find "docs/reports/$STORY" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          find "docs/reports/$REPORT_PATH" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
-          cp -R playwright-report/. "docs/reports/$STORY/"
+          cp -R playwright-report/. "docs/reports/$REPORT_PATH/"
+
 
       - name: Save updated report
         run: |
@@ -90,7 +127,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add docs/reports/
-          git commit -m "Update report for ${{ inputs.story }}" || echo "No changes to commit"
+          git commit -m "Atualizar relatório para ${{ inputs.execution }}" || echo "Sem mudanças para commit"
           git push
 
       - name: Upload Pages artifact
