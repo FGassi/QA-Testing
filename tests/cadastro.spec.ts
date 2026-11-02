@@ -15,7 +15,9 @@ test.describe('Primeira tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-1: Cadastro com campo e-mail vazio na primeira tela de cadastro', async ({ page }) => {
+    test('@AQ-TC-1: Cadastro com campo e-mail vazio na primeira tela de cadastro', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
 
         await test.step('When o visitante preenche o campo nome', async () => {
             await primeiraTela.preencherCampoNome(usuarioValido.nome);
@@ -37,7 +39,9 @@ test.describe('Primeira tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-3: Cadastro com campo nome vazio na primeira tela de cadastro', async ({ page }) => {
+    test('@AQ-TC-3: Cadastro com campo nome vazio na primeira tela de cadastro', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
        
         await test.step('When o visitante preenche o campo email com um endereço válido e ainda não cadastrado', async () => {
             await primeiraTela.preencherCampoEmail(emailGerado());
@@ -59,7 +63,9 @@ test.describe('Primeira tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-4: Cadastro com formatação de e-mail incorreta na primeira tela de cadastro', async ({ page }) => {
+    test('@AQ-TC-4: Cadastro com formatação de e-mail incorreta na primeira tela de cadastro', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
        
         await test.step('When o visitante preenche o campo email sem @', async () => {
             await primeiraTela.preencherCampoEmail(usuarioInvalido.email);
@@ -82,7 +88,9 @@ test.describe('Primeira tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-5: Cadastro com e-mail existente', async ({ page }) => {
+    test('@AQ-TC-5: Cadastro com e-mail existente', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
        
         await test.step('existe um usuário cadastrado com um e-mail', async () => {
         });
@@ -122,7 +130,9 @@ test.describe('Segunda tela de cadastro', () => {
         });
     });
     
-    test('@AQ-TC-6: Cadastro com campos obrigatórios vazios na segunda tela de cadastro', async ({ page }) => {
+    test('@AQ-TC-6: Cadastro com campos obrigatórios vazios na segunda tela de cadastro', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
 
         await test.step('When o visitante não preenche os demais campos obrigatórios', async () => {
         });
@@ -148,7 +158,9 @@ test.describe('Segunda tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-7: Cadastro bem sucedido com campos obrigatórios', async ({ page }) => {
+    test('@AQ-TC-7: Cadastro bem sucedido com campos obrigatórios', {
+        tag: ['@regression'],
+    }, async ({ page }) => {
         
         await test.step('When o visitante preenche os demais campos obrigatórios com dados válidos', async () => {
             await segundaTela.preencherCamposObrigatorios();
@@ -164,7 +176,9 @@ test.describe('Segunda tela de cadastro', () => {
         });
     });
 
-    test('@AQ-TC-8: Cadastro bem-sucedido com campos obrigatórios e opcionais', async ({ page }) => {
+    test('@AQ-TC-8: Cadastro bem-sucedido com campos obrigatórios e opcionais',{
+        tag: ['@smoke', '@regression'],
+    }, async ({ page }) => {
        
         await test.step('When o visitante preenche os demais campos obrigatórios com dados válidos', async () => {
             await segundaTela.preencherCamposObrigatorios();
