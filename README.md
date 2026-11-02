@@ -55,5 +55,5 @@ A estrutura será ajustada conforme as ferramentas e funcionalidades forem imple
 As instruções de instalação e execução serão adicionadas após a configuração do ambiente de automação.
 
 ## Relatórios e evidências
-[Relatório da story AQ-2 (cadastro)](https://fgassi.github.io/QA-Testing/reports/conta-autenticacao-AQ-2/)
+[Relatório da story AQ-2 (cadastro)](https://fgassi.github.io/QA-Testing/reports/conta-autenticacao/AQ-2/)
 Execução em 02/11/2026, nos 3 navegadores.
