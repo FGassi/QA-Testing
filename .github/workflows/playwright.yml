@@ -6,7 +6,7 @@ on:
     branches:
       - main
   paths-ignore:
-  - 'docs/reports/**'  
+      - 'docs/reports/**'  
   workflow_dispatch:
     inputs:
       execution:
