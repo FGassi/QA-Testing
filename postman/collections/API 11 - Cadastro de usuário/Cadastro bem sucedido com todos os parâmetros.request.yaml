@@ -1,0 +1,47 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/createAccount"
+method: POST
+body:
+  type: urlencoded
+  content:
+    name: QA Teste
+    email: "{{email_teste}}"
+    password: "123456"
+    title: Mr
+    birth_date: "15"
+    birth_month: "08"
+    birth_year: "1998"
+    firstname: QA
+    lastname: Teste
+    company: Empresa Teste
+    address1: Rua Teste, 100
+    address2: Apto 10
+    country: Brazil
+    zipcode: 09000-000
+    state: Sao Paulo
+    city: Santo Andre
+    mobile_number: "11999999999"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status HTTP deve ser 200\", function () {\r
+
+      \    pm.response.to.have.status(200); \r
+
+      });\r
+
+      \r
+
+      pm.test(\"A API deve reconhecer o usuário\", function () {\r
+
+      \    const body = pm.response.json();   \r
+
+      \r
+
+      \    pm.expect(body.responseCode).to.eql(201);  \r
+
+      \    pm.expect(body.message).to.eql(\"User created!\"); \r
+
+      });"
+    language: text/javascript
+order: 2000

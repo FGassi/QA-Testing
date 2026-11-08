@@ -4,7 +4,8 @@ import { PrimeiraTelaCadastro } from '../../../pages/primeira-tela-cadastro.page
 import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
 import { TelaConfirmacaoCadastro } from '../../../pages/tela-confirmacao-cadastro.page';
 
-test.describe('Primeira tela de cadastro', () => {
+test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
+    
     let primeiraTela: PrimeiraTelaCadastro;
 
     test.beforeEach(async ({ page }) => {
@@ -119,7 +120,7 @@ test.describe('Primeira tela de cadastro', () => {
 
 });
 
-test.describe('Segunda tela de cadastro', () => {
+test.describe('Segunda tela de cadastro', {tag: ['@ui']} ,() => {
     let primeiraTela: PrimeiraTelaCadastro;
     let segundaTela: SegundaTelaCadastro;
 
