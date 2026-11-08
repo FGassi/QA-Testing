@@ -1,0 +1,165 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/createAccount"
+method: POST
+headers:
+  Content-Type: application/x-www-form-urlencoded
+body:
+  type: text
+  content: "{{request_body}}"
+scripts:
+  - type: afterResponse
+    code: "const parametros = [\r
+
+      \    \"name\",\r
+
+      \    \"email\",\r
+
+      \    \"password\",\r
+
+      \    \"firstname\",\r
+
+      \    \"lastname\",\r
+
+      \    \"address1\",\r
+
+      \    \"country\",\r
+
+      \    \"zipcode\",\r
+
+      \    \"state\",\r
+
+      \    \"city\",\r
+
+      \    \"mobile_number\"\r
+
+      ];\r
+
+      \r
+
+      const omitParameter = parametros[pm.info.iteration];\r
+
+      \r
+
+      pm.test(\"Status HTTP deve ser 200\", function () {\r
+
+      \    pm.response.to.have.status(200); \r
+
+      });\r
+
+      \r
+
+      pm.test(\"A API deve informar ausência do parâmetro name\", function ()
+      {\r
+
+      \    const body = pm.response.json();   \r
+
+      \r
+
+      \    pm.expect(body.responseCode).to.eql(400);  \r
+
+      \    pm.expect(body.message).to.eql(`Bad request, ${omitParameter}
+      parameter is missing in POST request.`); \r
+
+      });\r
+
+      \r
+
+      console.log(\"ITERAÇÃO:\", pm.info.iteration);\r
+
+      console.log(\"MENSAGEM RECEBIDA:\", pm.response.json().message);"
+    language: text/javascript
+  - type: beforeRequest
+    code: "const data = {\r
+
+      \    name: \"Felipe\",\r
+
+      \    email: \"qa.api11@example.com\",\r
+
+      \    password: \"123456\",\r
+
+      \    firstname: \"Felipe\",\r
+
+      \    lastname: \"Silva\",\r
+
+      \    address1: \"Rua Exemplo, 100\",\r
+
+      \    country: \"Canada\",\r
+
+      \    zipcode: \"12345\",\r
+
+      \    state: \"Ontario\",\r
+
+      \    city: \"Toronto\",\r
+
+      \    mobile_number: \"11999999999\"\r
+
+      };\r
+
+      \r
+
+      // Parâmetro que deverá ser omitido nesta execução\r
+
+      const parametros = [\r
+
+      \    \"name\",\r
+
+      \    \"email\",\r
+
+      \    \"password\",\r
+
+      \    \"firstname\",\r
+
+      \    \"lastname\",\r
+
+      \    \"address1\",\r
+
+      \    \"country\",\r
+
+      \    \"zipcode\",\r
+
+      \    \"state\",\r
+
+      \    \"city\",\r
+
+      \    \"mobile_number\"\r
+
+      ];\r
+
+      \r
+
+      // Identifica o parâmetro a ser omitido nesta execução\r
+
+      const omitParameter = parametros[pm.info.iteration];\r
+
+      \r
+
+      const bodyData = { ...data };\r
+
+      \r
+
+      delete bodyData[omitParameter];\r
+
+      \r
+
+      const body = Object.entries(bodyData)\r
+
+      \    .map(([key, value]) =>\r
+
+      \        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`\r
+
+      \    )\r
+
+      \    .join(\"&\");\r
+
+      \r
+
+      pm.variables.set(\"request_body\", body);\r
+
+      \r
+
+      console.log(\"PARÂMETRO OMITIDO:\", omitParameter);\r
+
+      console.log(\"BODY GERADO:\", body);"
+    language: text/javascript
+order: 1000

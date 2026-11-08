@@ -1,0 +1,4 @@
+name: Automation Exercise
+values:
+  - key: base_url
+    value: ''

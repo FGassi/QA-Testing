@@ -1,0 +1,46 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/createAccount"
+method: POST
+body:
+  type: urlencoded
+  content:
+    name: QA Teste
+    email: "{{email_teste}}"
+    password: "123456"
+    firstname: QA
+    lastname: Teste
+    address1: Rua Teste, 100
+    country: Brazil
+    zipcode: 09000-000
+    state: Sao Paulo
+    city: Santo Andre
+    mobile_number: "11999999999"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status HTTP deve ser 200\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"A API deve confirmar a criação da conta\", function () {\r
+
+      \    const body = pm.response.json();\r
+
+      \r
+
+      \    pm.expect(body.responseCode).to.eql(201);\r
+
+      \    pm.expect(body.message).to.eql(\"User created!\");\r
+
+      });"
+    language: text/javascript
+  - type: beforeRequest
+    code: "const email = `felipe.${Date.now()}@example.com`;\r
+
+      pm.variables.set(\"email_teste\", email);"
+    language: text/javascript
+order: 4000

@@ -16,7 +16,6 @@ O objetivo é demonstrar um fluxo de trabalho de QA, desde a análise de requisi
 | Organização da automação | Page Object Model (POM) |
 | CI/CD | GitHub Actions |
 | Publicação de relatórios | GitHub Pages |
-| Execução de cenários BDD | Cucumber (planejado) |
 | Testes de API | Postman (planejado) |
 
 ## Processo
