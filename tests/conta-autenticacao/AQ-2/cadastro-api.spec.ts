@@ -10,6 +10,7 @@ test.describe('Cadastro de usuário - API', {
 
         const response = await request.post('https://automationexercise.com/api/createAccount', {
             form: {
+                //obrigatorios
                 name: 'Felipe',
                 email: emailGerado(),
                 password: 'Senha123',
@@ -21,6 +22,13 @@ test.describe('Cadastro de usuário - API', {
                 state: 'Sao Paulo',
                 city: 'Santo Andre',
                 mobile_number: '11999999999',
+                //opcionais
+                title: 'Mr',
+                birth_date:
+                birth_mont:,
+                birth_year:,
+                company:,
+                address2:,
             }
         });
 
