@@ -33,6 +33,7 @@ Feature: Cadastrar novo usuário
   Then o visitante permanece na primeira tela de cadastro 
   And o visitante é avisado de que o formato do e-mail é inválido
 
+
   @AQ-TC-5
   Scenario: Cadastro com e-mail existente
   Given que o visitante se encontra na primeira tela de cadastro
