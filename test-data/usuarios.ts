@@ -16,7 +16,7 @@ export const usuarioValido = {
   //dados adicionais 
   titulo: 'Mr.',
   diaNascimento: '15',
-  mesNascimento: '08',
+  mesNascimento: '8',
   anoNascimento: '1999',
   empresa: 'Empresa Teste',
   enderecoDois: 'Avenida dos Testes',
