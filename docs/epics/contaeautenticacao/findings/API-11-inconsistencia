@@ -13,4 +13,4 @@
 
 **Resultado:** A API retorna HTTP `200 OK` nos dois cenários, mesmo quando o corpo da resposta informa códigos diferentes.
 
-**Conclusão:** Foi identificada uma possível inconsistência entre o status HTTP e o código de resposta informado no JSON. O achado merece investigação, mas não permite afirmar, isoladamente, a existência de um defeito na implementação, pois seria necessário confrontar o comportamento com o contrato ou a documentação oficial da API.
+**Conclusão:** Foi identificada uma possível inconsistência entre o status HTTP e o código de resposta informado no JSON. 
