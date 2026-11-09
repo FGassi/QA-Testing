@@ -44,26 +44,26 @@ export class SegundaTelaCadastro {
     }
 
     async preencherCamposObrigatorios(){
-        await this.campoSenha.fill(`${process.env.SENHA_NOVO_USUARIO}`);
+        await this.campoSenha.fill(usuarioValido.password);
         await this.campoPrimeiroNome.fill(usuarioValido.nome);
         await this.campoSobrenome.fill(usuarioValido.sobrenome);
-        await this.campoEndereco.fill(`${process.env.ENDERECO}`);
-        await this.campoPais.selectOption('Singapore'); //.selectOption({ value: 'Singapore' });  pelo atributo value
+        await this.campoEndereco.fill(usuarioValido.enderecoUm);
+        await this.campoPais.selectOption(usuarioValido.pais); //.selectOption({ value: 'Singapore' });  pelo atributo value
         await this.campoEstado.fill(usuarioValido.estado);
         await this.campoCidade.fill(usuarioValido.cidade);
-        await this.campoCep.fill(`${process.env.CEP}`);
-        await this.campoCelular.fill(`${process.env.CELULAR}`);
+        await this.campoCep.fill(usuarioValido.cep);
+        await this.campoCelular.fill(usuarioValido.celular);
     }
 
     async preencherCamposOpcionais(){
-        await this.page.getByRole('radio', { name: 'Mr.' }).check();
-        await this.page.getByTestId('days').selectOption('9');
-        await this.page.getByTestId('months').selectOption('November');
-        await this.page.getByTestId('years').selectOption('1999');
+        await this.page.getByRole('radio', { name: usuarioValido.titulo }).check();
+        await this.page.getByTestId('days').selectOption(usuarioValido.diaNascimento);
+        await this.page.getByTestId('months').selectOption(usuarioValido.mesNascimento);
+        await this.page.getByTestId('years').selectOption(usuarioValido.anoNascimento);
         await this.page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
         await this.page.getByRole('checkbox', { name: 'Receive special offers from our partners!' }).check();
-        await this.page.getByTestId('company').fill('Empresa');
-        await this.page.getByTestId('address2').fill('Endereço dois');
+        await this.page.getByTestId('company').fill(usuarioValido.empresa);
+        await this.page.getByTestId('address2').fill(usuarioValido.enderecoDois);
     }
 
     async clicarCriarConta(){

@@ -18,6 +18,7 @@ on:
           - Smoke testes
           - "Epic: conta-autenticacao"
           - "Story: conta-autenticacao / AQ-2"
+          - "API: conta-autenticacao / AQ-2"
           - "Story: conta-autenticacao / AQ-3"
           - "Story: conta-autenticacao / AQ-4"
           - "Story: conta-autenticacao / AQ-5"
@@ -89,6 +90,9 @@ jobs:
               "Story: conta-autenticacao / AQ-2")
                 npx playwright test "tests/conta-autenticacao/AQ-2/cadastro.spec.ts"
                 ;;
+              "API: conta-autenticacao / AQ-2") 
+                npx playwright test "tests/conta-autenticacao/AQ-2/cadastro-api.spec.ts"
+                ;;
               "Story: conta-autenticacao / AQ-3"|"Story: conta-autenticacao / AQ-4"|"Story: conta-autenticacao / AQ-5")
                 echo "Tests not configured for this User Story yet."
                 exit 1
@@ -122,6 +126,9 @@ jobs:
                 ;;
               "Story: conta-autenticacao / AQ-2")
                 REPORT_PATH="conta-autenticacao/AQ-2"
+                ;;
+              "API: conta-autenticacao / AQ-2")
+                REPORT_PATH="conta-autenticacao/AQ-2/API"
                 ;;
               "Story: conta-autenticacao / AQ-3")
                 REPORT_PATH="conta-autenticacao/AQ-3"
