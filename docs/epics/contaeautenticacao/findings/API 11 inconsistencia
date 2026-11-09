@@ -1,0 +1,16 @@
+### Finding — Inconsistência entre o status HTTP e o código de resposta da API 11
+
+**Contexto:** Durante os testes exploratórios da API 11 (Create Account), foram identificadas divergências entre o status HTTP retornado e o código informado no corpo da resposta JSON.
+
+**Comportamentos observados:**
+
+| Cenário | Status HTTP | `responseCode` no JSON |
+|---|---:|---:|
+| Cadastro bem-sucedido | 200 | 201 |
+| Ausência de parâmetros obrigatórios | 200 | 400 |
+
+**Comportamento esperado:** Os status HTTP deveriam representar adequadamente o resultado da operação. Para a criação de um usuário, espera-se preferencialmente `201 Created`. Para requisições inválidas por ausência de parâmetros obrigatórios, espera-se `400 Bad Request`.
+
+**Resultado:** A API retorna HTTP `200 OK` nos dois cenários, mesmo quando o corpo da resposta informa códigos diferentes.
+
+**Conclusão:** Foi identificada uma possível inconsistência entre o status HTTP e o código de resposta informado no JSON. 
