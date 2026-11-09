@@ -50,6 +50,4 @@ Mesmo quando algum teste falha, o workflow está configurado para gerar e public
 
 ## Publicação
 
-Os relatórios são publicados pelo GitHub Pages e podem ser acessados diretamente pelo navegador.
-
 Esta branch é utilizada exclusivamente para armazenar os relatórios HTML, mantendo os artefatos gerados independentes do código-fonte.
