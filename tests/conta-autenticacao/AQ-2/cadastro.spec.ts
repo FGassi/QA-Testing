@@ -101,7 +101,7 @@ test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
         });
 
         await test.step('And preenche o campo e-mail com o e-mail do usuário cadastrado', async () => {
-            await primeiraTela.preencherCampoEmail(`${process.env.EMAIL_CADASTRADO}`);
+            await primeiraTela.preencherCampoEmail(usuarioValido.email);
         });
 
         await test.step('And clica no botão de cadastrar', async () => {
