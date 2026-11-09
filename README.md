@@ -12,8 +12,8 @@ O objetivo é demonstrar um fluxo de trabalho de QA, desde a análise de requisi
 | Gestão de casos de teste | BesTest |
 | Documentação e versionamento | Markdown, Git e GitHub |
 | BDD | Gherkin |
-| Automação de testes web e API | Playwright + TypeScript |
-| Testes de API | Postman |
+| Testes exploratórios de API | Postman |
+| Automação de testes de UI e API | Playwright + TypeScript |
 | Organização da automação | Page Object Model (POM) |
 | CI/CD | GitHub Actions |
 | Publicação de relatórios | GitHub Pages |
@@ -24,10 +24,11 @@ O objetivo é demonstrar um fluxo de trabalho de QA, desde a análise de requisi
 2. **BesTest:** criação e gerenciamento de requisitos e casos de teste.
 3. **Gherkin:** documentação dos comportamentos esperados em cenários BDD.
 4. **Rastreabilidade:** relacionamento entre User Stories, requisitos e casos de teste.
-5. **Git e GitHub:** versionamento, organização por branches, commits e Pull Requests.
-6. **Playwright:** implementação e execução de testes automatizados de UI e API utilizando TypeScript.
-7. **GitHub Actions:** execução automatizada dos testes por meio de um pipeline CI/CD.
-8. **Relatórios e evidências:** geração de relatórios HTML, armazenamento dos resultados e publicação pelo GitHub Pages.
+5. **Postman:** exploração de endpoints, envio de requisições e análise de parâmetros, respostas e códigos HTTP.
+6. **Git e GitHub:** versionamento, organização por branches, commits e Pull Requests.
+7. **Playwright:** implementação e execução de testes automatizados de UI e API utilizando TypeScript.
+8. **GitHub Actions:** execução automatizada dos testes por meio de um pipeline CI/CD.
+9. **Relatórios e evidências:** geração de relatórios HTML, armazenamento dos resultados e publicação pelo GitHub Pages.
 
 ## Estrutura do repositório
 
@@ -126,25 +127,4 @@ O projeto utiliza três branches com responsabilidades distintas:
 
 - **`main`:** branch principal, que recebe as alterações por meio de Pull Requests. Cada push executa automaticamente os testes Smoke.
 - **`dev`:** branch de desenvolvimento e integração das alterações antes de serem enviadas à `main`.
-- **`relatorios`:** branch destinada ao armazenamento dos relatórios HTML gerados pelas execuções automatizadas.
-
-### Armazenamento e publicação dos relatórios
-
-Os relatórios HTML são armazenados na branch `relatorios`, separada do código-fonte.
-
-A organização dos diretórios acompanha as opções de execução disponíveis no GitHub Actions:
-
-```text
-reports/
-├── Smoke-tests/
-├── All-tests/
-└── conta-autenticacao/
-    ├── Epic/
-    ├── AQ-2/
-    │   └── API/
-    ├── AQ-3/
-    ├── AQ-4/
-    └── AQ-5/
-```
-
-Cada execução atualiza o relatório correspondente à seleção realizada, preservando os relatórios das demais categorias.
+- **`relatorios
