@@ -63,6 +63,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Clean previous test results
+        run: rm -f test-results/results.json
+
       - name: Run selected tests
         id: tests
         continue-on-error: true
@@ -100,6 +103,11 @@ jobs:
             esac
           fi
       
+      - name: Sync results with BesTest
+        run: node scripts/sincronizar-bestest.js
+        env:
+          BESTEST_API_TOKEN: ${{ secrets.BESTEST_API_TOKEN }}
+
       - name: Prepare report
         if: always()
         run: |
