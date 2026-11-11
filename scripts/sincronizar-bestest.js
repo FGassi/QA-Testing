@@ -42,8 +42,16 @@ function encontrarTestes(suites) {
 
 const specs = encontrarTestes(relatorio.suites);
 
-// Extrai os resultados dos testes de API
-const resultados = [];
+// Extrai e consolida os resultados dos testes
+const resultadosAgrupados = new Map();
+
+const statusMapeado = {
+    passed: 'PASSED',
+    failed: 'FAILED',
+    timedOut: 'FAILED',
+    interrupted: 'FAILED',
+    skipped: 'SKIPPED',
+};
 
 for (const spec of specs) {
     const identificador = spec.title.match(/AQ-TC-\d+/)?.[0];
@@ -51,8 +59,21 @@ for (const spec of specs) {
     if (!identificador) continue;
 
     for (const teste of spec.tests) {
-        // Considera somente o projeto API
-        if (teste.projectName !== 'api') continue;
+        const projeto = teste.projectName;
+
+        // Identifica se o teste pertence à UI ou à API
+        let tipo;
+        let ciclo;
+
+        if (projeto === 'api') {
+            tipo = 'API';
+            ciclo = 'AQ-CY-3';
+        } else if (['chromium', 'firefox', 'webkit'].includes(projeto)) {
+            tipo = 'UI';
+            ciclo = 'AQ-CY-2';
+        } else {
+            continue;
+        }
 
         const tentativas = teste.results;
 
@@ -60,14 +81,6 @@ for (const spec of specs) {
 
         // Considera a última tentativa realizada
         const ultimaTentativa = tentativas[tentativas.length - 1];
-
-        const statusMapeado = {
-            passed: 'PASSED',
-            failed: 'FAILED',
-            timedOut: 'FAILED',
-            interrupted: 'FAILED',
-            skipped: 'SKIPPED',
-        };
 
         const resultado = statusMapeado[ultimaTentativa.status];
 
@@ -77,22 +90,68 @@ for (const spec of specs) {
             );
         }
 
-        resultados.push({
-            caso: identificador,
-            resultado,
-            tentativas: tentativas.length,
-            instavel: teste.status === 'flaky',
-            projeto: teste.projectName,
-        });
+        // Cria o agrupamento na primeira ocorrência do caso
+        if (!resultadosAgrupados.has(identificador)) {
+            resultadosAgrupados.set(identificador, {
+                caso: identificador,
+                tipo,
+                ciclo,
+                resultados: [],
+                navegadores: [],
+                tentativas: 0,
+                instavel: false,
+            });
+        }
+
+        const grupo = resultadosAgrupados.get(identificador);
+
+        if (grupo.tipo !== tipo) {
+            throw new Error(
+                `${identificador}: encontrado em projetos de tipos diferentes.`
+            );
+        }
+
+        grupo.resultados.push(resultado);
+        grupo.navegadores.push(projeto);
+        grupo.tentativas += tentativas.length;
+        grupo.instavel ||= teste.status === 'flaky';
     }
 }
 
-// Exibe os resultados extraídos
+// Consolida os resultados de cada caso
+const resultados = [];
+
+for (const grupo of resultadosAgrupados.values()) {
+    let resultado;
+
+    if (grupo.resultados.includes('FAILED')) {
+        resultado = 'FAILED';
+    } else if (grupo.resultados.every(status => status === 'PASSED')) {
+        resultado = 'PASSED';
+    } else if (grupo.resultados.every(status => status === 'SKIPPED')) {
+        resultado = 'SKIPPED';
+    } else {
+        resultado = 'BLOCKED';
+    }
+
+    resultados.push({
+        caso: grupo.caso,
+        tipo: grupo.tipo,
+        ciclo: grupo.ciclo,
+        resultado,
+        navegadores: grupo.navegadores.join(', '),
+        tentativas: grupo.tentativas,
+        instavel: grupo.instavel,
+    });
+}
+
 console.table(resultados);
 
-// Verifica se todos os 14 casos foram encontrados
+// Verifica se algum teste foi encontrado
 if (resultados.length === 0) {
-    throw new Error('Nenhum teste de API foi encontrado no relatório do Playwright.');
+    throw new Error(
+        'Nenhum teste de UI ou API foi encontrado no relatório do Playwright.'
+    );
 }
 
 
@@ -104,7 +163,7 @@ async function consultarExecucoes() {
 
     for (const resultado of resultados) {
         const filtro = new URLSearchParams({
-            filter: `testCycle.testCycleKey = 'AQ-CY-3' AND testCase.testCaseKey = '${resultado.caso}'`
+            filter: `testCycle.testCycleKey = '${resultado.ciclo}' AND testCase.testCaseKey = '${resultado.caso}'`
         });
 
         const response = await fetch(
@@ -158,6 +217,8 @@ async function consultarExecucoes() {
 
         execucoesEncontradas.push({
             caso: resultado.caso,
+            tipo: resultado.tipo,
+            ciclo: resultado.ciclo,
             resultadoPlaywright: resultado.resultado,
             idExecucao: execucao.id,
             chaveExecucao: execucao.attributes.testCaseExecutionKey,
@@ -227,6 +288,8 @@ async function atualizarExecucao() {
 
             console.log({
                 caso: execucao.caso,
+                tipo: execucao.tipo,
+                ciclo: execucao.ciclo,
                 chaveExecucao: execucao.chaveExecucao,
                 resultado: dados.data.attributes.result
             });
