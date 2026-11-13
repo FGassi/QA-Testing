@@ -14,3 +14,16 @@ para realizar compras.
 - CA-04: Se o e-mail já existe, o sistema exibe um aviso abaixo do campo e-mail.
 - CA-05: Quando o cadastro dá certo, o sistema exibe uma tela de sucesso.
 
+## AQ-3 — Realizar login
+
+### Descrição
+Como usuário,
+quero realizar login com e-mail e senha,
+para realizar compras.
+
+### Critérios de aceitação
+
+- CA-01: Para realizar login, após o usuário inserir um e-mail e senha cadastrados na plataforma e solicitar o login, ele é direcionado à página inicial.
+- CA-02: Dado que foi informado um e-mail não cadastrado e a senha foi preenchida, quando o usuário solicita o login, é exibido em tela a mensagem “E-mail ou senha incorreto”.
+- CA-03: Com e-mail cadastrado e senha incorreta, ao solicitar o login, é exibida a mensagem ‘E-mail ou senha incorreto’.
+- CA-04: Se o campo e-mail ou senha estiver vazio, quando o usuário solicitar login, o campo vazio é sinalizado como obrigatório.
