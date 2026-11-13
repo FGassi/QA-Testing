@@ -23,3 +23,11 @@
 | AQ-2 - Cadastrar novo usuário | AQ-REQ-1 - Cadastrar novo usuário | AQ-TC-20 - [API] Cadastro sem o parâmetro city
 | AQ-2 - Cadastrar novo usuário | AQ-REQ-1 - Cadastrar novo usuário | AQ-TC-21 - [API] Cadastro sem o parâmetro mobile_number
 | AQ-2 - Cadastrar novo usuário | AQ-REQ-1 - Cadastrar novo usuário | AQ-TC-22 - [API] Tentativa de cadastro com e-mail já existente
+
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-23 - [UI] Realizar login com dados existentes e corretos
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-24 - [UI] Tentativa de login com e-mail não cadastrado
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-25 - [UI] Tentativa de login com senha incorreta
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-26 - [UI] Tentativa de login com campo obrigatório vazio
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-27 - [API] Login com parâmetros e-mail e senha válidos
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-28 - [API] Tentativa de login sem parâmetro obrigatório
+| AQ-3 - Realizar Login | AQ-REQ-2 - Realizar Login | AQ-TC-29 - [API] Tentativa de login com credenciais inválidas ou campo vazio
