@@ -1,5 +1,5 @@
 import { test, expect, APIResponse } from '@playwright/test';
-import {emailGerado, criarParametrosObrigatorios, parametrosOpcionais, usuarioValido} from '../../../test-data/usuarios';
+import {emailGerado, usuarioValido} from '../../../test-data/usuarios';
 
 test.describe('Login de usuário - API', {
     tag: ['@api']}, () => {
