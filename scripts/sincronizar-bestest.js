@@ -7,6 +7,7 @@ require('dotenv').config({
 });
 
 const token = process.env.BESTEST_API_TOKEN;
+const MODO_SIMULACAO = false;
 
 if (!token) {
     throw new Error('BESTEST_API_TOKEN não foi definida no ambiente.');
@@ -41,7 +42,77 @@ function encontrarTestes(suites) {
 }
 
 const specs = encontrarTestes(relatorio.suites);
+// Define os ciclos e as faixas de casos de cada User Story
+const configuracaoStories = {
+    'AQ-2': {
+        ciclos: {
+            UI: 'AQ-CY-2',
+            API: 'AQ-CY-3',
+        },
+        validarCaso: {
+            UI: numero => numero >= 1 && numero <= 8 && numero !== 2,
+            API: numero => numero >= 9 && numero <= 22,
+        },
+    },
 
+    'AQ-3': {
+        ciclos: {
+            UI: 'AQ-CY-6',
+            API: 'AQ-CY-5',
+        },
+        validarCaso: {
+            UI: numero => numero >= 23 && numero <= 26,
+            API: numero => numero >= 27 && numero <= 29,
+        },
+    },
+};
+
+// Identifica a User Story, o tipo de teste e o ciclo correspondente
+function identificarCiclo(spec, projeto, identificador) {
+    let tipo;
+
+    if (projeto === 'api') {
+        tipo = 'API';
+    } else if (['chromium', 'firefox', 'webkit'].includes(projeto)) {
+        tipo = 'UI';
+    } else {
+        return null;
+    }
+
+    // Identifica a User Story pelo caminho do arquivo
+    const correspondencia = spec.file.match(
+        /(?:^|[\\/])(AQ-\d+)(?:[\\/])/i
+    );
+
+    if (!correspondencia) {
+        throw new Error(
+            `${identificador}: não foi possível identificar a User Story pelo arquivo ${spec.file}.`
+        );
+    }
+
+    const story = correspondencia[1].toUpperCase();
+    const configuracao = configuracaoStories[story];
+
+    if (!configuracao) {
+        throw new Error(
+            `${identificador}: não existe configuração para a User Story ${story}.`
+        );
+    }
+
+    // Valida se o caso pertence à faixa esperada para UI ou API
+    const numeroCaso = Number(identificador.match(/\d+$/)[0]);
+
+    if (!configuracao.validarCaso[tipo](numeroCaso)) {
+        throw new Error(
+            `${identificador}: caso incompatível com ${story} / ${tipo}. Arquivo: ${spec.file}.`
+        );
+    }
+
+    return {
+        tipo,
+        ciclo: configuracao.ciclos[tipo],
+    };
+}
 // Extrai e consolida os resultados dos testes
 const resultadosAgrupados = new Map();
 
@@ -49,7 +120,7 @@ const statusMapeado = {
     passed: 'PASSED',
     failed: 'FAILED',
     timedOut: 'FAILED',
-    interrupted: 'FAILED',
+    interrupted: 'BLOCKED',
     skipped: 'SKIPPED',
 };
 
@@ -61,19 +132,12 @@ for (const spec of specs) {
     for (const teste of spec.tests) {
         const projeto = teste.projectName;
 
-        // Identifica se o teste pertence à UI ou à API
-        let tipo;
-        let ciclo;
+        // Identifica o tipo de teste e o ciclo correspondente
+        const identificacao = identificarCiclo(spec, projeto, identificador);
 
-        if (projeto === 'api') {
-            tipo = 'API';
-            ciclo = 'AQ-CY-3';
-        } else if (['chromium', 'firefox', 'webkit'].includes(projeto)) {
-            tipo = 'UI';
-            ciclo = 'AQ-CY-2';
-        } else {
-            continue;
-        }
+        if (!identificacao) continue;
+
+        const { tipo, ciclo } = identificacao;
 
         const tentativas = teste.results;
 
@@ -82,6 +146,15 @@ for (const spec of specs) {
         // Considera a última tentativa realizada
         const ultimaTentativa = tentativas[tentativas.length - 1];
 
+        if (tentativas.length > 1) {
+    console.log({
+        caso: identificador,
+        projeto,
+        statusTeste: teste.status,
+        statusTentativas: tentativas.map(tentativa => tentativa.status),
+        quantidadeTentativas: tentativas.length,
+    });
+}
         const resultado = statusMapeado[ultimaTentativa.status];
 
         if (!resultado) {
@@ -105,9 +178,9 @@ for (const spec of specs) {
 
         const grupo = resultadosAgrupados.get(identificador);
 
-        if (grupo.tipo !== tipo) {
+        if (grupo.tipo !== tipo || grupo.ciclo !== ciclo) {
             throw new Error(
-                `${identificador}: encontrado em projetos de tipos diferentes.`
+                `${identificador}: encontrado com tipos ou ciclos diferentes no relatório.`
             );
         }
 
@@ -126,10 +199,16 @@ for (const grupo of resultadosAgrupados.values()) {
 
     if (grupo.resultados.includes('FAILED')) {
         resultado = 'FAILED';
+
+    } else if (grupo.resultados.includes('BLOCKED')) {
+        resultado = 'BLOCKED';
+
     } else if (grupo.resultados.every(status => status === 'PASSED')) {
         resultado = 'PASSED';
+
     } else if (grupo.resultados.every(status => status === 'SKIPPED')) {
         resultado = 'SKIPPED';
+
     } else {
         resultado = 'BLOCKED';
     }
@@ -250,7 +329,12 @@ async function atualizarExecucao() {
                 );
                 continue;
             }
-
+            if (MODO_SIMULACAO) {
+                console.log(
+                `${execucao.caso}: simulação — seria atualizado de ${execucao.resultadoBesTest} para ${execucao.resultadoPlaywright}.`
+                );
+                continue;
+            }
             const corpoRequisicao = {
                 data: {
                     type: 'test_case_executions',
@@ -295,9 +379,12 @@ async function atualizarExecucao() {
             });
         }
 
-    console.log('\nSincronização concluída.');
+    console.log(
+    MODO_SIMULACAO
+        ? '\nSimulação concluída. Nenhuma alteração foi enviada ao BesTest.'
+        : '\nSincronização concluída.'
+    );
 }
-
 
 atualizarExecucao().catch(error => {
     console.error(error);
