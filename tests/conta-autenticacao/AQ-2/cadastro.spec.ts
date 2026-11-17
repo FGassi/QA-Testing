@@ -1,15 +1,15 @@
 import { test, expect, Page } from '@playwright/test';
 import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
-import { PrimeiraTelaCadastro } from '../../../pages/primeira-tela-cadastro.page'; 
+import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page'; 
 import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
 import { TelaConfirmacaoCadastro } from '../../../pages/tela-confirmacao-cadastro.page';
 
 test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
     
-    let primeiraTela: PrimeiraTelaCadastro;
+    let primeiraTela: AutenticacaoPage;
 
     test.beforeEach(async ({ page }) => {
-        primeiraTela = new PrimeiraTelaCadastro(page);
+        primeiraTela = new AutenticacaoPage(page);
 
         await test.step('Given que o visitante se encontra na primeira tela de cadastro', async () => {
             await primeiraTela.acessarPrimeiraTela();
@@ -121,7 +121,7 @@ test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
 });
 
 test.describe('Segunda tela de cadastro', {tag: ['@ui']} ,() => {
-    let primeiraTela: PrimeiraTelaCadastro;
+    let primeiraTela: AutenticacaoPage;
     let segundaTela: SegundaTelaCadastro;
 
     test.beforeEach(async ({ page }) => {

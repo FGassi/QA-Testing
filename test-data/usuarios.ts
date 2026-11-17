@@ -24,6 +24,7 @@ export const usuarioValido = {
 
 export const usuarioInvalido = { 
   email: 'peterteste.com',
+  password: 'essasenhanaoexiste',
 };
 
 //hora - cresce a cada instante

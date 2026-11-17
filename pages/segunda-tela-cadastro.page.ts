@@ -1,10 +1,10 @@
 import { Page, Locator } from '@playwright/test';
-import { PrimeiraTelaCadastro } from './primeira-tela-cadastro.page';
+import { AutenticacaoPage } from './tela-autenticacao.page';
 import { usuarioValido, emailGerado } from '../test-data/usuarios';
 
 
 export class SegundaTelaCadastro {
-    primeiraTela: PrimeiraTelaCadastro;
+    primeiraTela: AutenticacaoPage;
     page:Page;
     botaoCriarConta:Locator;
     textoSegundaTela:Locator;
@@ -20,7 +20,7 @@ export class SegundaTelaCadastro {
     campoCelular:Locator;
 
     constructor(page: Page) {
-        this.primeiraTela = new PrimeiraTelaCadastro(page);
+        this.primeiraTela = new AutenticacaoPage(page);
         this.page = page;
         this.botaoCriarConta = page.getByRole('button', { name: 'Create Account' });
         //campos obrigatorios
