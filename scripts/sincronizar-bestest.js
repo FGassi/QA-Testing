@@ -146,15 +146,6 @@ for (const spec of specs) {
         // Considera a última tentativa realizada
         const ultimaTentativa = tentativas[tentativas.length - 1];
 
-        if (tentativas.length > 1) {
-    console.log({
-        caso: identificador,
-        projeto,
-        statusTeste: teste.status,
-        statusTentativas: tentativas.map(tentativa => tentativa.status),
-        quantidadeTentativas: tentativas.length,
-    });
-}
         const resultado = statusMapeado[ultimaTentativa.status];
 
         if (!resultado) {
@@ -242,7 +233,9 @@ async function consultarExecucoes() {
 
     for (const resultado of resultados) {
         const filtro = new URLSearchParams({
-            filter: `testCycle.testCycleKey = '${resultado.ciclo}' AND testCase.testCaseKey = '${resultado.caso}'`
+            filter: `testCycle.testCycleKey = '${resultado.ciclo}' AND testCase.testCaseKey = '${resultado.caso}'`,
+            sort: '-createdAt',
+            'page[size]': '100',
         });
 
         const response = await fetch(
@@ -263,13 +256,23 @@ async function consultarExecucoes() {
 
         const dados = await response.json();
 
-        if (dados.data.length !== 1) {
+        if (!dados.data || dados.data.length === 0) {
             throw new Error(
-                `${resultado.caso}: esperada 1 execução no BesTest, mas foram encontradas ${dados.data.length}.`
+                `${resultado.caso}: nenhuma execução encontrada no BesTest para o ciclo ${resultado.ciclo}.`
             );
         }
 
         const execucao = dados.data[0];
+
+        console.log(
+            `${resultado.caso}: execução selecionada ${execucao.attributes.testCaseExecutionKey}, criada em ${execucao.attributes.createdAt}.`
+        );
+
+        if (dados.data.length > 1) {
+            console.log(
+                `${resultado.caso}: ${dados.data.length} execuções encontradas. Selecionada a mais recente: ${execucao.attributes.testCaseExecutionKey}.`
+            );
+        }
 
         // Consulta individual para obter o ETag
         const responseIndividual = await fetch(
