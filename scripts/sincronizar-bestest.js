@@ -7,7 +7,7 @@ require('dotenv').config({
 });
 
 const token = process.env.BESTEST_API_TOKEN;
-const MODO_SIMULACAO = true;
+const MODO_SIMULACAO = false;
 
 if (!token) {
     throw new Error('BESTEST_API_TOKEN não foi definida no ambiente.');
