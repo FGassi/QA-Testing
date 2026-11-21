@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
 import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page'; 
 import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
-import { TelaConfirmacaoCadastro } from '../../../pages/tela-confirmacao-cadastro.page';
+import { TelaConfirmacao } from '../../../pages/tela-confirmacao-cadastro.page';
 import { HomePage } from '../../../pages/home-tela.page';
 
 test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
@@ -131,7 +131,8 @@ test.describe('Segunda tela de cadastro', {tag: ['@ui']} ,() => {
     test.beforeEach(async ({ page }) => {
         await test.step('Given que o visitante se encontra na segunda tela de cadastro', async () => {
             segundaTela = new SegundaTelaCadastro(page);
-            await segundaTela.acessarSegundaTela();
+            const emailUsuario = emailGerado();
+            await segundaTela.acessarSegundaTela(emailUsuario);
         });
     });
     
@@ -176,8 +177,8 @@ test.describe('Segunda tela de cadastro', {tag: ['@ui']} ,() => {
         });
 
         await test.step('Then o sistema direciona o usuário cadastrado para uma tela de confirmação', async () => {
-            const telaConfirmacao = new TelaConfirmacaoCadastro(page);
-            await expect(telaConfirmacao.textoTelaConfirmacao).toBeVisible();
+            const telaConfirmacao = new TelaConfirmacao(page);
+            await expect(telaConfirmacao.textoConfirmacaoCadastro).toBeVisible();
         });
     });
 
@@ -198,8 +199,8 @@ test.describe('Segunda tela de cadastro', {tag: ['@ui']} ,() => {
         });
 
         await test.step('Then o sistema direciona o usuário cadastrado para uma tela de confirmação', async () => {
-            const telaConfirmacao = new TelaConfirmacaoCadastro(page);
-            await expect(telaConfirmacao.textoTelaConfirmacao).toBeVisible();
+            const telaConfirmacao = new TelaConfirmacao(page);
+            await expect(telaConfirmacao.textoConfirmacaoCadastro).toBeVisible();
         });
     });
 });
