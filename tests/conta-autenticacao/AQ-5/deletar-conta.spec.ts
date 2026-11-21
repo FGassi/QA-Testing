@@ -66,6 +66,7 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
             await telaConfirmacao.clicarContinuar();
             // Excluir a conta
             await menu.deletarConta();
+            await telaConfirmacao.clicarContinuar();
         });
 
         await test.step('When tentar realizar login com suas credenciais anteriores', async () => {
