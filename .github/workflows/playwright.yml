@@ -103,7 +103,10 @@ jobs:
               "API: conta-autenticacao / AQ-3")
                 npx playwright test "tests/conta-autenticacao/AQ-3/login-api.spec.ts"
                 ;;
-              "Story: conta-autenticacao / AQ-4"|"Story: conta-autenticacao / AQ-5")
+              "Story: conta-autenticacao / AQ-4")
+                npx playwright test "tests/conta-autenticacao/AQ-4/logout.spec.ts"
+                ;;
+              "Story: conta-autenticacao / AQ-5")
                 echo "Tests not configured for this User Story yet."
                 exit 1
                 ;;
