@@ -36,29 +36,12 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
 
         await test.step('When acessar a opção Delete Account', async () => {
             await menu.deletarConta();
-
-            console.log('URL após exclusão:', page.url());
-                console.log('Título da página:', await page.title());
-
-                await page.screenshot({
-                path: 'test-results/apos-exclusao.png',
-                fullPage: true
-            });
         });
 
         await test.step('Then o sistema deve excluir a conta do usuário', async () => {
         });
        
         await test.step('And exibir uma mensagem de confirmação da exclusão', async () => {
-
-            console.log('URL após exclusão:', page.url());
-
-            console.log('Título da página:', await page.title());
-
-            await page.screenshot({
-                path: 'test-results/apos-exclusao.png',
-                fullPage: true,
-            });
 
             await expect(telaConfirmacao.textoConfirmacaoDeletar).toBeVisible();
         });
