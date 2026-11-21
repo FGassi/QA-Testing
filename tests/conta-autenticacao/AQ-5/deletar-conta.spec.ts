@@ -30,8 +30,7 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
             await segundaTelaCadastro.preencherCamposObrigatorios();
             await segundaTelaCadastro.clicarCriarConta();
             //acessar homepage autenticado
-            await homePage.acessarPagina();
- 
+            await telaConfirmacao.clicarContinuar();
         });
 
         await test.step('When acessar a opção Delete Account', async () => {
@@ -42,8 +41,8 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
         });
        
         await test.step('And exibir uma mensagem de confirmação da exclusão', async () => {
-
             await expect(telaConfirmacao.textoConfirmacaoDeletar).toBeVisible();
+            await telaConfirmacao.clicarContinuar();
         });
     });
 
@@ -56,6 +55,7 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
         segundaTelaCadastro = new SegundaTelaCadastro(page);
         menu = new Menu(page);
         telaLogin = new AutenticacaoPage(page);
+        telaConfirmacao = new TelaConfirmacao(page);
 
         await test.step('Given que o usuário possui uma conta excluída', async () => {
             //acessar tela cadastro e realizar cadastro
@@ -63,7 +63,8 @@ test.describe('Deletar conta de usuário - UI', {tag: ['@ui']} ,() => {
             await segundaTelaCadastro.preencherCamposObrigatorios();
             await segundaTelaCadastro.clicarCriarConta();
             //acessar homepage autenticado
-            await homePage.acessarPagina();
+            await telaConfirmacao.clicarContinuar();
+            // Excluir a conta
             await menu.deletarConta();
         });
 
