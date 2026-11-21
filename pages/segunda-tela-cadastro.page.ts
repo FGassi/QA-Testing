@@ -1,6 +1,9 @@
 import { Page, Locator } from '@playwright/test';
 import { AutenticacaoPage } from './tela-autenticacao.page';
+import { HomePage } from './home-tela.page';
 import { usuarioValido, emailGerado } from '../test-data/usuarios';
+import { Menu } from '../components/menu.component';
+
 
 
 export class SegundaTelaCadastro {
@@ -18,6 +21,8 @@ export class SegundaTelaCadastro {
     campoCidade:Locator;
     campoCep:Locator;
     campoCelular:Locator;
+    menu:Menu
+    homepage: HomePage;
 
     constructor(page: Page) {
         this.primeiraTela = new AutenticacaoPage(page);
@@ -34,10 +39,13 @@ export class SegundaTelaCadastro {
         this.campoCep = page.getByTestId('zipcode');
         this.campoCelular = page.getByTestId('mobile_number');
         this.textoSegundaTela = page.getByRole('heading', { name: 'Enter Account Information' });
+        this.menu = new Menu(page);
+        this.homepage = new HomePage(page);
     }
 
     async acessarSegundaTela(){
-        await this.primeiraTela.acessarPrimeiraTela();
+        await this.homepage.acessarPagina();
+        await this.primeiraTela.menu.acessarTelaAutenticacao();
         await this.primeiraTela.preencherCampoNome(usuarioValido.nome);
         await this.primeiraTela.preencherCampoEmail(emailGerado());
         await this.primeiraTela.clicarCadastrar();

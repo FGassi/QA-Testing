@@ -3,16 +3,20 @@ import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/u
 import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page'; 
 import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
 import { TelaConfirmacaoCadastro } from '../../../pages/tela-confirmacao-cadastro.page';
+import { HomePage } from '../../../pages/home-tela.page';
 
 test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
     
     let primeiraTela: AutenticacaoPage;
+    let homePage: HomePage;
 
     test.beforeEach(async ({ page }) => {
+        homePage = new HomePage(page);
         primeiraTela = new AutenticacaoPage(page);
 
         await test.step('Given que o visitante se encontra na primeira tela de cadastro', async () => {
-            await primeiraTela.acessarPrimeiraTela();
+            await homePage.acessarPagina();
+            await primeiraTela.menu.acessarTelaAutenticacao();
         });
     });
 
