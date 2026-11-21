@@ -74,6 +74,15 @@ const configuracaoStories = {
             UI: numero => [30, 33, 34].includes(numero),
         },
     },
+
+    'AQ-5': {
+        ciclos: {
+            UI: 'AQ-CY-9',
+        },
+        validarCaso: {
+            UI: numero => [31, 36].includes(numero),
+        },
+    },
 };
 
 // Identifica a User Story, o tipo de teste e o ciclo correspondente

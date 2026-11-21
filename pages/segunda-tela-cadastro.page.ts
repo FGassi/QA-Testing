@@ -43,11 +43,11 @@ export class SegundaTelaCadastro {
         this.homepage = new HomePage(page);
     }
 
-    async acessarSegundaTela(){
+    async acessarSegundaTela(email: string){
         await this.homepage.acessarPagina();
         await this.primeiraTela.menu.acessarTelaAutenticacao();
         await this.primeiraTela.preencherCampoNome(usuarioValido.nome);
-        await this.primeiraTela.preencherCampoEmail(emailGerado());
+        await this.primeiraTela.preencherCampoEmail(email);
         await this.primeiraTela.clicarCadastrar();
     }
 
