@@ -1,18 +1,21 @@
 import { test, expect, Page } from '@playwright/test';
 import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
 import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page';
-import { HomePage } from '../../../pages/home-page.page'; 
+import { HomePage } from '../../../pages/home-tela.page'; 
 
 
-test.describe('Tela Login', {tag: ['@ui']} ,() => {
+test.describe('Login de usuário - UI', {tag: ['@ui']} ,() => {
     
     let primeiraTela: AutenticacaoPage;
+    let homePage: HomePage;
 
     test.beforeEach(async ({ page }) => {
         primeiraTela = new AutenticacaoPage(page);
+        homePage = new HomePage(page);
 
         await test.step('Given que o usuário se encontra na tela de login', async () => {
-            await primeiraTela.acessarPrimeiraTela();
+          await homePage.acessarPagina();  
+          await primeiraTela.menu.acessarTelaAutenticacao();
         });
     });
 
@@ -34,7 +37,7 @@ test.describe('Tela Login', {tag: ['@ui']} ,() => {
 
        await test.step('Then o usuário é direcionado para a página inicial', async () => {
             const telainicial = new HomePage(page);
-            await expect(telainicial.textoLogout).toBeVisible();
+            await expect(telainicial.titulo).toBeVisible();
        })
     });
 

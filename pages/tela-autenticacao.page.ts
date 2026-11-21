@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { Menu } from '../components/menu.component';
 
 export class AutenticacaoPage {
     page:Page;
@@ -11,6 +12,7 @@ export class AutenticacaoPage {
     campoSenhaLogin:Locator;
     botaoLogin:Locator;
     textoLoginIncorreto:Locator;
+    menu:Menu;
 
     constructor(page: Page) {
         this.page = page;
@@ -23,11 +25,7 @@ export class AutenticacaoPage {
         this.campoSenhaLogin = this.page.getByTestId('login-password');
         this.botaoLogin = this.page.getByTestId('login-button');
         this.textoLoginIncorreto = this.page.getByText('Your email or password is incorrect!');
-    }
-
-    async acessarPrimeiraTela(){
-        await this.page.goto('https://automationexercise.com/');
-        await this.page.getByRole('link', { name: 'Signup / Login' }).click();
+        this.menu = new Menu(page);
     }
 
     async preencherCampoNome(nome: string){
