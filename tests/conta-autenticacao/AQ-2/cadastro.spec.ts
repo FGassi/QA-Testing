@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
 import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page'; 
 import { SegundaTelaCadastro } from '../../../pages/segunda-tela-cadastro.page';
-import { TelaConfirmacao } from '../../../pages/tela-confirmacao-cadastro.page';
+import { TelaConfirmacao } from '../../../pages/tela-confirmacao.page';
 import { HomePage } from '../../../pages/home-tela.page';
 
 test.describe('Primeira tela de cadastro', {tag: ['@ui']} ,() => {
