@@ -78,9 +78,11 @@ const configuracaoStories = {
     'AQ-5': {
         ciclos: {
             UI: 'AQ-CY-9',
+            API: 'AQ-CY-10',
         },
         validarCaso: {
             UI: numero => [31, 36].includes(numero),
+            API: numero => [32, 35, 37].includes(numero),
         },
     },
 };

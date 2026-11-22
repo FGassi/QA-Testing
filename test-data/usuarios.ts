@@ -23,7 +23,7 @@ export const usuarioValido = {
 };
 
 export const usuarioInvalido = { 
-  email: 'peterteste.com',
+  email:  emailGerado(),
   password: 'essasenhanaoexiste',
 };
 

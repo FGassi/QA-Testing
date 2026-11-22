@@ -23,6 +23,7 @@ on:
           - "API: conta-autenticacao / AQ-3"
           - "Story: conta-autenticacao / AQ-4"
           - "Story: conta-autenticacao / AQ-5"
+          - "API: conta-autenticacao / AQ-5"
 
 permissions:
   contents: write
@@ -109,6 +110,9 @@ jobs:
               "Story: conta-autenticacao / AQ-5")
                 npx playwright test "tests/conta-autenticacao/AQ-5/deletar-conta.spec.ts"
                 ;;
+              "API: conta-autenticacao / AQ-5")
+                npx playwright test "tests/conta-autenticacao/AQ-5/deletar-conta-api.spec.ts"
+                ;;
             esac
           fi
       
@@ -158,6 +162,9 @@ jobs:
                 ;;
               "Story: conta-autenticacao / AQ-5")
                 REPORT_PATH="conta-autenticacao/AQ-5"
+                ;;
+              "API: conta-autenticacao / AQ-5")
+                REPORT_PATH="conta-autenticacao/AQ-5/API"
                 ;;
             esac
           fi
