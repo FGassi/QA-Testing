@@ -116,6 +116,15 @@ jobs:
             esac
           fi
       
+      - name: Upload evidências Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencias-playwright
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Sync results with BesTest
         run: node scripts/sincronizar-bestest.js
         env:
