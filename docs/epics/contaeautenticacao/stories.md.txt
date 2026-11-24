@@ -1,4 +1,4 @@
-# User Stories
+# User Stories de Conta e autenticação
 
 ## AQ-2 — Cadastrar novo usuário
 
@@ -27,3 +27,87 @@ para realizar compras.
 - CA-02: Dado que foi informado um e-mail não cadastrado e a senha foi preenchida, quando o usuário solicita o login, é exibido em tela a mensagem “E-mail ou senha incorreto”.
 - CA-03: Com e-mail cadastrado e senha incorreta, ao solicitar o login, é exibida a mensagem ‘E-mail ou senha incorreto’.
 - CA-04: Se o campo e-mail ou senha estiver vazio, quando o usuário solicitar login, o campo vazio é sinalizado como obrigatório.
+
+## AQ-4 Realizar logout
+
+### Descrição
+Como usuário,
+quero realizar logout,
+para encerrar minha sessão
+
+### Critérios de aceitação
+
+- CA-01: Com uma sessão ativa, após o usuário clicar em Logout, o sistema deverá encerrar a sessão e redirecioná-lo para a tela de login;
+- CA-02: Após realizar Logout, o carrinho de compras deverá ser apresentado vazio, sem os itens adicionados durante a sessão anterior.
+
+## AQ-5 Deletar conta
+
+### Descrição
+Como usuário,
+quero excluir minha conta,
+para remover meu cadastro na plataforma
+
+### Critérios de aceitação
+
+- CA-01: O sistema deve permitir que um usuário cadastrado e autenticado solicite a exclusão de sua conta.
+- CA-02: Após a solicitação de exclusão, o sistema deverá excluir a conta e apresentar uma mensagem de confirmação ao usuário.
+- CA-03: Após a exclusão da conta, o usuário não deverá conseguir realizar login utilizando suas credenciais anteriores.
+- CA-04: O sistema deverá informar quando a tentativa de exclusão for realizada com credenciais inválidas ou referentes a uma conta inexistente, caso essa validação faça parte do contrato da API.
+
+# User Stories de Catálogo de produtos
+
+## AQ-9 — Visualizar produtos
+
+### Descrição
+Como visitante, 
+quero visualizar a lista de produtos disponíveis 
+para conhecer os produtos oferecidos pela loja.
+
+### Critérios de aceitação
+- CA-01: O sistema deve permitir que o visitante acesse a página de produtos.
+- CA-02: O sistema deve apresentar a lista de produtos disponíveis.
+- CA-03: Cada produto deve apresentar nome, preço e imagem.
+- CA-04: Cada produto deve apresentar a opção de visualizar seus detalhes.
+
+## AQ-10 — Filtrar produtos
+
+### Descrição
+Como visitante, 
+quero aplicar filtros aos produtos disponíveis 
+para refinar os resultados de acordo com minhas preferências.
+
+### Critérios de aceitação
+- CA-01: O sistema deve disponibilizar opções de filtragem dos produtos.
+- CA-02: O sistema deve permitir selecionar um critério de filtragem.
+- CA-03: O sistema deve apresentar somente os produtos correspondentes ao filtro selecionado.
+- CA-04: O sistema deve permitir alterar o filtro aplicado.
+- CA-05: O sistema deve permitir retornar à visualização de todos os produtos, removendo o filtro aplicado.
+
+## AQ-11 — Buscar produtos
+
+### Descrição
+Como visitante, 
+quero pesquisar produtos pelo nome 
+para localizar rapidamente um produto específico.
+
+### Critérios de aceitação
+- CA-01: O sistema deve disponibilizar um campo de pesquisa de produtos.
+- CA-02: O sistema deve permitir que o visitante informe um termo de pesquisa.
+- CA-03: O sistema deve apresentar os produtos correspondentes ao termo pesquisado após a solicitação de busca.
+- CA-04: O sistema deve apresentar uma mensagem adequada quando nenhum produto corresponder ao termo pesquisado.
+- CA-05: O sistema deve permitir realizar uma nova pesquisa após uma pesquisa anterior.
+
+## AQ-12 — Avaliar produtos
+
+### Descrição
+Como visitante, 
+quero enviar uma avaliação sobre um produto 
+para compartilhar minha opinião com outros usuários.
+
+### Critérios de aceitação
+- CA-01: O sistema deve disponibilizar um formulário para avaliação do produto.
+- CA-02: O sistema deve permitir informar o nome do avaliador.
+- CA-03: O sistema deve permitir informar o endereço de e-mail do avaliador.
+- CA-04: O sistema deve permitir escrever uma mensagem de avaliação.
+- CA-05: O sistema deve permitir enviar a avaliação.
+- CA-06: O sistema deve apresentar uma confirmação após o envio da avaliação.
