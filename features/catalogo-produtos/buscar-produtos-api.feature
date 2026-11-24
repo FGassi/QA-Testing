@@ -12,7 +12,7 @@ Feature: Buscar produtos
     When enviar uma requisição POST para "/api/searchProduct" com o parâmetro "search_product"
     Then a resposta deve ter status HTTP 200
     And o responseCode deve ser 200
-    And o responseBody deve conter a lista de produtos correspondentes à pesquisa
+    And o responseBody deve conter a lista de produtos com as informações esperadas
 
     @AQ-TC-46
     Scenario: Buscar produtos sem informar o parâmetro obrigatório
