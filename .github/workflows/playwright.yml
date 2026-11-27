@@ -24,6 +24,9 @@ on:
           - "Story: conta-autenticacao / AQ-4"
           - "Story: conta-autenticacao / AQ-5"
           - "API: conta-autenticacao / AQ-5"
+          - "Story: catalogo-de-produtos / AQ-9"
+          - "API: catalogo-de-produtos / AQ-9"
+          - "API: catalogo-de-produtos / AQ-11"
 
 permissions:
   contents: write
@@ -113,6 +116,15 @@ jobs:
               "API: conta-autenticacao / AQ-5")
                 npx playwright test "tests/conta-autenticacao/AQ-5/deletar-conta-api.spec.ts"
                 ;;
+              "Story: catalogo-de-produtos / AQ-9")
+              npx playwright test "tests/catalogo-de-produtos/AQ-9/visualizar-produtos.spec.ts"
+              ;;
+              "API: catalogo-de-produtos / AQ-9"
+              npx playwright test "tests/catalogo-de-produtos/AQ-9/visualizar-produtos-api.spec.ts"
+              ;;
+              "API: catalogo-de-produtos / AQ-11")
+              npx playwright test "tests/catalogo-de-produtos/AQ-11/buscar-produtos-api.spec.ts"
+              ;;
             esac
           fi
       
@@ -174,6 +186,15 @@ jobs:
                 ;;
               "API: conta-autenticacao / AQ-5")
                 REPORT_PATH="conta-autenticacao/AQ-5/API"
+                ;;
+              "Story: catalogo-de-produtos / AQ-9")
+                REPORT_PATH="catalogo-de-produtos/AQ-9"
+                ;;
+              "API: catalogo-de-produtos / AQ-9")
+                REPORT_PATH="catalogo-de-produtos/AQ-9/API"
+                ;;
+              "API: catalogo-de-produtos / AQ-11")
+                REPORT_PATH="catalogo-de-produtos/AQ-11/API"
                 ;;
             esac
           fi

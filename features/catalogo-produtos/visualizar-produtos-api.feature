@@ -11,6 +11,7 @@ Feature: Visualizar produtos
     Given que a API de produtos esteja disponível
     When enviar uma requisição GET para "/api/productsList"
     Then a resposta deve ter status HTTP 200
+    And o responseCode deve ser 200
     And o responseBody deve conter a lista de produtos
 
     @AQ-TC-53
