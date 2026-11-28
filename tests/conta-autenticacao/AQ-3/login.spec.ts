@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '../../../fixtures/test-fixture';
 import { usuarioValido, usuarioInvalido, emailGerado} from '../../../test-data/usuarios';
 import { AutenticacaoPage } from '../../../pages/tela-autenticacao.page';
 import { HomePage } from '../../../pages/home-tela.page'; 
