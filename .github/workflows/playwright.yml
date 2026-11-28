@@ -119,7 +119,7 @@ jobs:
               "Story: catalogo-de-produtos / AQ-9")
               npx playwright test "tests/catalogo-de-produtos/AQ-9/visualizar-produtos.spec.ts"
               ;;
-              "API: catalogo-de-produtos / AQ-9"
+              "API: catalogo-de-produtos / AQ-9")
               npx playwright test "tests/catalogo-de-produtos/AQ-9/visualizar-produtos-api.spec.ts"
               ;;
               "API: catalogo-de-produtos / AQ-11")
