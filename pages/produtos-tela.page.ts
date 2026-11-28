@@ -64,13 +64,6 @@ export class TelaProdutos {
 
 
     async acessarPagina() {
-        // Bloqueia requisições de redes de publicidade
-        await this.page.route(
-        /(googlesyndication\.com|doubleclick\.net|googleadservices\.com)/i,
-        route => route.abort()
-        );
-
-        await this.page.goto('https://automationexercise.com/products');
         await this.page.goto('https://automationexercise.com/products');
     }
 
