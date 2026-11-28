@@ -28,12 +28,16 @@ export class TelaProdutos {
         this.listaProdutos = this.page.locator('.features_items');
         this.produtos = this.page.locator('.product-image-wrapper');
         this.viewProduct = this.page.getByRole('link', { name: 'View Product' }).first();
-        this.availability = this.page.getByText('Availability');
-        this.condition = this.page.getByText('Condition:');
-        this.brand = this.page.getByText('Brand:');
+        this.availability = this.page.locator('.product-information').getByText('Availability:');
+        this.condition = this.page.locator('.product-information').getByText('Condition:');
+        this.brand = this.page.locator('.product-information').getByText('Brand:');
         this.nomeProduto = this.page.locator('.product-information h2');
         this.precoProduto = this.page.locator('.product-information > span > span');
         this.visualizarProdutoButton = this.page.getByRole('link', { name: 'View Product' }).first();        
+    }
+
+    async acessarPagina() {
+        await this.page.goto('https://automationexercise.com/products');
     }
 
     async adicionarProduto(){
@@ -41,7 +45,7 @@ export class TelaProdutos {
         await this.produtoUm.click();
     }
 
-    async visualizarProduto(){
+    async visualizarProduto() {
         await this.viewProduct.click();
     }
 
