@@ -82,7 +82,7 @@ test.describe('Quando usuário está presente na página de produtos', {tag: ['@
     }, async ({ page }) => {
 
        await test.step('When visualizar um produto disponível', async () => {
-            await expect(produtosPage.visualizarProdutoButton).toBeVisible();
+            await expect(produtosPage.viewProduct).toBeVisible();
        });
 
        await test.step('Then o sistema deve apresentar a opção de visualizar os detalhes do produto', async () => {
