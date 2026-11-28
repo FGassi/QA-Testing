@@ -127,7 +127,7 @@ jobs:
               npx playwright test "tests/catalogo-de-produtos/AQ-11/buscar-produtos-api.spec.ts"
               ;;
               "Story: catalogo-de-produtos / AQ-12")
-              npx playwright test "tests/catalogo-de-produtos/AQ-11/buscar-produtos-api.spec.ts"
+              npx playwright test "tests/catalogo-de-produtos/AQ-12/avaliar-produtos.spec.ts"
               ;;
             esac
           fi
