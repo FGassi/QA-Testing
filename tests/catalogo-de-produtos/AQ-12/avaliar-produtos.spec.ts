@@ -20,6 +20,12 @@ test.describe('Avaliar produtos - UI', {tag: ['@ui']} ,() => {
 
         await test.step('When acessar os detalhes de um produto', async () => {
             await produtosPage.visualizarProduto();
+
+                // Confirma que chegou à página de detalhes
+    await expect(page).toHaveURL(/product_details\/\d+/);
+
+    // Confirma que as informações do produto foram carregadas
+    await expect(produtosPage.nomeProduto).toBeVisible();
         });
 
         await test.step('Then o sistema deve apresentar a seção "Write Your Review"', async () => {
@@ -43,9 +49,11 @@ test.describe('Avaliar produtos - UI', {tag: ['@ui']} ,() => {
         await test.step('Given que o visitante esteja na página de detalhes de um produto', async () => {
             await produtosPage.acessarPagina();
             await produtosPage.visualizarProduto();
+            await expect(produtosPage.nomeProduto).toBeVisible();
         });
 
         await test.step('And o formulário "Write Your Review" esteja disponível', async () => {
+            
             await expect(produtosPage.writeReview).toBeVisible();
         });
 

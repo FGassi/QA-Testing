@@ -42,6 +42,26 @@ function encontrarTestes(suites) {
 }
 
 const specs = encontrarTestes(relatorio.suites);
+
+console.log('Quantidade de suites:', relatorio.suites?.length);
+console.log('Quantidade de specs encontrados:', specs.length);
+
+console.log(
+    'Dados encontrados no relatório:',
+    JSON.stringify(
+        specs.map(spec => ({
+            arquivo: spec.file,
+            titulo: spec.title,
+            testes: (spec.tests || []).map(teste => ({
+                projeto: teste.projectName,
+                quantidadeResultados: teste.results?.length
+            }))
+        })),
+        null,
+        2
+    )
+);
+
 // Define os ciclos e as faixas de casos de cada User Story
 const configuracaoStories = {
     'AQ-2': {
