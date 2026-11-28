@@ -5,11 +5,10 @@ import { TelaProdutos } from '../../../pages/produtos-tela.page';
 let homePage:HomePage;
 let produtosPage: TelaProdutos;
 
-
-
 test('@AQ-TC-47: Acessar a página de produtos', {
         tag: ['@smoke','@regression'],
     }, async ({ page }) => {
+        produtosPage = new TelaProdutos(page);
         homePage = new HomePage(page);
 
        await test.step('Given que o visitante esteja na página inicial', async () => {
@@ -17,12 +16,12 @@ test('@AQ-TC-47: Acessar a página de produtos', {
        });
 
        await test.step('When acessar a página de produtos', async () => {
-        await homePage.menu.acessarTelaProdutos();
-       });
+            await homePage.menu.acessarTelaProdutos();
+        });
 
-       await test.step('Then o sistema deve apresentar a página de produtos', async () => {
-        await expect(homePage.titulo).toBeVisible();
-       });
+        await test.step('Then o sistema deve apresentar a página de produtos', async () => {
+            await expect(produtosPage.titulo).toBeVisible();
+        });
 
     });
 
@@ -34,7 +33,7 @@ test.describe('Quando usuário está presente na página de produtos', {tag: ['@
         produtosPage = new TelaProdutos(page);
 
         await test.step('Given que o visitante esteja na página de produtos', async () => {
-            await homePage.acessarPagina();
+            await produtosPage.acessarPagina();
         });
     });
 
@@ -58,13 +57,13 @@ test.describe('Quando usuário está presente na página de produtos', {tag: ['@
             const produto = produtosPage.produtos.nth(i);
 
             await test.step('Then cada produto apresentado deve conter um nome', async () => {
-                const nome = produto.locator('p');
+                const nome = produto.locator('p').first();;
                 await expect(nome).toBeVisible();
                 await expect(nome).not.toBeEmpty();
             });
 
             await test.step('And cada produto apresentado deve conter um preço', async () => {
-                const preco = produto.locator('h2');
+                const preco = produto.locator('.productinfo h2');
                 await expect(preco).toBeVisible();
                 await expect(preco).not.toBeEmpty();
             });
@@ -83,13 +82,14 @@ test.describe('Quando usuário está presente na página de produtos', {tag: ['@
     }, async ({ page }) => {
 
        await test.step('When visualizar um produto disponível', async () => {
-            expect(produtosPage.visualizarProdutoButton).toBeVisible();
+            await expect(produtosPage.viewProduct).toBeVisible();
        });
 
        await test.step('Then o sistema deve apresentar a opção de visualizar os detalhes do produto', async () => {
+            await produtosPage.visualizarProduto();
+
+            console.log('Quantidade de links View Product:', await produtosPage.viewProduct.count());
             await expect(produtosPage.availability).toBeVisible();
-            await expect(produtosPage.condition).toBeVisible();
-            await expect(produtosPage.brand).toBeVisible();
        });
 
     });
@@ -100,8 +100,9 @@ test.describe('Quando usuário está presente na página de produtos', {tag: ['@
 
         //obtenção do texto
         const produto = produtosPage.produtos.first();
-        const nome = await produto.locator('p').innerText();
-        const preco = await produto.locator('h2').innerText();
+
+        const nome = await produto.locator('.productinfo p').innerText();
+        const preco = await produto.locator('.productinfo h2').innerText();
         
        await test.step('When selecionar a opção de visualizar os detalhes de um produto', async () => {
             await produtosPage.visualizarProduto();

@@ -27,6 +27,7 @@ on:
           - "Story: catalogo-de-produtos / AQ-9"
           - "API: catalogo-de-produtos / AQ-9"
           - "API: catalogo-de-produtos / AQ-11"
+          - "Story: catalogo-de-produtos / AQ-12"
 
 permissions:
   contents: write
@@ -125,6 +126,9 @@ jobs:
               "API: catalogo-de-produtos / AQ-11")
               npx playwright test "tests/catalogo-de-produtos/AQ-11/buscar-produtos-api.spec.ts"
               ;;
+              "Story: catalogo-de-produtos / AQ-12")
+              npx playwright test "tests/catalogo-de-produtos/AQ-11/buscar-produtos-api.spec.ts"
+              ;;
             esac
           fi
     
@@ -186,6 +190,9 @@ jobs:
                 ;;
               "API: catalogo-de-produtos / AQ-11")
                 REPORT_PATH="catalogo-de-produtos/AQ-11/API"
+                ;;
+              "Story: catalogo-de-produtos / AQ-12")
+                REPORT_PATH="catalogo-de-produtos/AQ-12"
                 ;;
             esac
           fi

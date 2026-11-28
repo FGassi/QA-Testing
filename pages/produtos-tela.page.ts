@@ -10,13 +10,21 @@ export class TelaProdutos {
     listaProdutos: Locator;
     produtos: Locator;
     viewProduct: Locator;
-    availability: Locator;
-    condition: Locator;
-    brand: Locator;
-    nomeProduto: Locator;
-    precoProduto: Locator;
-    visualizarProdutoButton: Locator;
-    
+
+    //metodo privado de organização
+    availability!: Locator;
+    condition!: Locator;
+    brand!: Locator;
+    nomeProduto!: Locator;
+    precoProduto!: Locator;
+
+    //metodo privado de organização
+    writeReview!: Locator;
+    nomeAvaliacao!:Locator;
+    emailAvaliacao!:Locator;
+    reviewAvaliacao!:Locator;
+    submitButton!:Locator;
+    confirmacaoAvaliacao!:Locator;
 
 
     constructor(page: Page) {
@@ -28,12 +36,35 @@ export class TelaProdutos {
         this.listaProdutos = this.page.locator('.features_items');
         this.produtos = this.page.locator('.product-image-wrapper');
         this.viewProduct = this.page.getByRole('link', { name: 'View Product' }).first();
-        this.availability = this.page.getByText('Availability');
-        this.condition = this.page.getByText('Condition:');
-        this.brand = this.page.getByText('Brand:');
+
+
+        //metodo privado para organização
+        this.inicializarLocatorsDetalhes();  
+        this.inicializarLocatorsAvaliacao();
+    }
+
+    //locators separados em métodos privados - estudo
+    private inicializarLocatorsDetalhes() {
+        this.availability = this.page.locator('.product-information').getByText('Availability:');
+        this.condition = this.page.locator('.product-information').getByText('Condition:');
+        this.brand = this.page.locator('.product-information').getByText('Brand:');
         this.nomeProduto = this.page.locator('.product-information h2');
-        this.precoProduto = this.page.locator('.product-information > span > span');
-        this.visualizarProdutoButton = this.page.getByRole('link', { name: 'View Product' }).first();        
+        this.precoProduto = this.page.locator('.product-information > span > span')
+    }
+
+    private inicializarLocatorsAvaliacao() {
+        //review
+        this.writeReview = this.page.getByRole('link', { name: 'Write Your Review' });
+        this.nomeAvaliacao = this.page.getByPlaceholder('Your Name');
+        this.emailAvaliacao = this.page.getByPlaceholder('Email Address').first();
+        this.reviewAvaliacao = this.page.getByPlaceholder('Add Review Here!');
+        this.submitButton = this.page.getByRole('button', { name: 'Submit' });
+        this.confirmacaoAvaliacao = this.page.getByText('Thank you for your review.');
+    }
+
+
+    async acessarPagina() {
+        await this.page.goto('https://automationexercise.com/products');
     }
 
     async adicionarProduto(){
@@ -41,9 +72,24 @@ export class TelaProdutos {
         await this.produtoUm.click();
     }
 
-    async visualizarProduto(){
+    async visualizarProduto() {
         await this.viewProduct.click();
     }
 
+    async inserirNomeAvaliacao(nome:string){
+        await this.nomeAvaliacao.fill(nome);
+    }
+
+    async inserirEmailAvaliacao(email:string){
+        await this.emailAvaliacao.fill(email);
+    }
+
+    async inserirTextoAvaliacao(texto:string){
+        await this.reviewAvaliacao.fill(texto);    
+    }
+
+    async submeterAvaliacao() {
+    await this.submitButton.click();
+    }
 
 }

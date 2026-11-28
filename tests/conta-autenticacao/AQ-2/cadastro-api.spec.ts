@@ -1,5 +1,5 @@
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/test.fixture';
 import {emailGerado, criarParametrosObrigatorios, parametrosOpcionais, usuarioValido} from '../../../test-data/usuarios';
 
 test.describe('Cadastro de usuário - API', {

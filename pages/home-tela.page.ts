@@ -9,7 +9,7 @@ export class HomePage {
     constructor(page: Page) {
         this.page = page;
         this.menu = new Menu(page);
-        this.titulo = this.page.getByRole('heading', { name: 'AutomationExercise' });
+        this.titulo = this.page.locator('.carousel-inner .item.active h1');
     }
 
     async acessarPagina() {

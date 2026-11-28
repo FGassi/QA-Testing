@@ -25,7 +25,7 @@ export class Menu {
         await this.loginButton.click();
     }
 
-    async acessarTelaProdutos(){
+    async acessarTelaProdutos() {
         await this.productsButton.click();
     }
 
